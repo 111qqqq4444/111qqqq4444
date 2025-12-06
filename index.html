@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅行青蛙：信息茧房</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 游戏背景 -->
+        <div class="background" id="background">
+            <!-- 温馨家庭背景 -->
+            <div class="home-background">
+                <!-- 地板 -->
+                <div class="floor"></div>
+                
+                <!-- 窗户 -->
+                <div class="window"></div>
+                <div class="curtain"></div>
+                
+                <!-- 照片墙 -->
+                <div class="photo-frame photo-1"></div>
+                <div class="photo-frame photo-2"></div>
+                <div class="photo-frame photo-3"></div>
+                
+                <!-- 书架 -->
+                <div class="bookcase">
+                    <div class="shelf shelf-1"></div>
+                    <div class="shelf shelf-2"></div>
+                    <div class="book book-1"></div>
+                    <div class="book book-2"></div>
+                    <div class="book book-3"></div>
+                    <div class="book book-4"></div>
+                    <div class="book book-5"></div>
+                    <div class="book book-6"></div>
+                </div>
+            </div>
+            <!-- 渐暗遮罩 -->
+            <div class="darkness" id="darkness"></div>
+            <!-- 房间灯光 -->
+            <div class="room-light"></div>
+        </div>
+
+        <!-- 青蛙元素 -->
+        <div class="frog" id="frog"></div>
+        
+        <!-- 游戏封面 -->
+        <div class="game-cover" id="game-cover">
+            <div class="cover-content">
+                <h1>旅行青蛙</h1>
+                <p>信息茧房大冒险</p>
+                <button class="start-btn" id="start-btn">开始游戏</button>
+            </div>
+        </div>
+
+        <!-- 篝火 -->
+        <div class="campfire" id="campfire">
+            <div class="fire"></div>
+            <div class="wood"></div>
+        </div>
+
+        <!-- 好感度指示器 -->
+        <div class="affection-container">
+            <div class="affection-label">好感度</div>
+            <div class="affection-bar">
+                <div class="affection-fill" id="affection-fill"></div>
+            </div>
+            <div class="affection-value" id="affection-value">50</div>
+        </div>
+
+        <!-- 问题区域 -->
+        <div class="question-container" id="question-container">
+            <div class="question-text" id="question-text">你想为青蛙选择什么活动？</div>
+            <div class="options-container" id="options-container">
+                <button class="option" data-choice="0">选项1</button>
+                <button class="option" data-choice="1">选项2</button>
+                <button class="option" data-choice="2">选项3</button>
+                <button class="option" data-choice="3">选项4</button>
+            </div>
+        </div>
+
+        <!-- 游戏结束画面 -->
+        <div class="game-over" id="game-over">
+            <div class="game-over-text">游戏结束</div>
+            <div class="game-over-message" id="game-over-message"></div>
+            <button class="restart-btn" onclick="location.reload()">重新开始</button>
+        </div>
+
+        <!-- 选择计数器 -->
+        <div class="choice-counter">选择次数: <span id="choice-count">0</span>/<span id="max-choices">15</span></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

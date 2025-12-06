@@ -1,0 +1,665 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    overflow: hidden;
+}
+
+.game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    max-width: 800px;
+    max-height: 600px;
+    margin: 0 auto;
+    background-color: #87CEEB;
+    overflow: hidden;
+}
+
+/* 背景样式 */
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* 温馨家庭背景 */
+.home-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f5ece0; /* 温暖的米黄色墙面 */
+    overflow: hidden;
+}
+
+/* 墙壁纹理 */
+.home-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%23f5ece0"/><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
+    pointer-events: none;
+}
+
+/* 地板 */
+.floor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background-color: #d2b48c;
+    background-image: 
+        linear-gradient(90deg, rgba(139, 69, 19, 0.1) 50%, transparent 50%),
+        linear-gradient(rgba(139, 69, 19, 0.1) 50%, transparent 50%);
+    background-size: 20px 20px;
+}
+
+/* 窗户 */
+.window {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 20%;
+    height: 30%;
+    background-color: #87CEEB;
+    border: 10px solid #8B4513;
+    border-radius: 5px;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3);
+    transition: background-color 1s ease;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.window::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+    pointer-events: none;
+}
+
+.window.night {
+    background-color: #0a0a2a;
+}
+
+.window.night::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    width: 15px;
+    height: 15px;
+    background-color: #ffffe0;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #ffffe0, 0 0 40px #ffffe0;
+    animation: twinkle 4s infinite alternate;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.window.night::before {
+    background: linear-gradient(to bottom, rgba(44, 44, 128, 0.2), transparent);
+}
+
+/* 房间灯光效果 */
+.room-light {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.6) 0%, rgba(255, 215, 0, 0) 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.window::before,
+.window::after {
+    content: '';
+    position: absolute;
+    background-color: #8B4513;
+}
+
+.window::before {
+    top: 0;
+    left: 50%;
+    width: 5px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+.window::after {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    transform: translateY(-50%);
+}
+
+/* 窗帘 */
+.curtain {
+    position: absolute;
+    top: 15%;
+    right: 8%;
+    width: 24%;
+    height: 15px;
+    background-color: #f8e0d4;
+    border-radius: 5px 5px 0 0;
+}
+
+/* 照片墙 */
+.photo-frame {
+    position: absolute;
+    background-color: white;
+    border: 5px solid #8B4513;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.photo-1 {
+    top: 25%;
+    left: 10%;
+    width: 15%;
+    height: 20%;
+    transform: rotate(-5deg);
+}
+
+.photo-2 {
+    top: 35%;
+    left: 30%;
+    width: 12%;
+    height: 18%;
+    transform: rotate(3deg);
+}
+
+.photo-3 {
+    top: 20%;
+    left: 50%;
+    width: 14%;
+    height: 16%;
+    transform: rotate(-2deg);
+}
+
+/* 照片内容 */
+.photo-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e0f7fa;
+    background-image: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), transparent 70%);
+}
+
+/* 书架 */
+.bookcase {
+    position: absolute;
+    bottom: 40%;
+    left: 5%;
+    width: 15%;
+    height: 30%;
+    background-color: #8B4513;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.shelf {
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    height: 3px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.shelf-1 { top: 30%; }
+.shelf-2 { top: 60%; }
+
+/* 书籍 */
+.book {
+    position: absolute;
+    bottom: 5px;
+    width: 20%;
+    height: 20%;
+    background-color: #4a6fa5;
+    border-radius: 2px;
+    box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.book-1 { left: 10%; background-color: #ff6b6b; }
+.book-2 { left: 35%; background-color: #4ecdc4; }
+.book-3 { left: 60%; background-color: #ffe66d; }
+.book-4 { left: 10%; bottom: 35%; background-color: #1a535c; }
+.book-5 { left: 35%; bottom: 35%; background-color: #7b68ee; }
+.book-6 { left: 60%; bottom: 35%; background-color: #ffa62b; }
+
+.darkness {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 1s ease;
+}
+
+/* 气泡效果样式 */
+.bubbles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(220, 240, 255, 0.5));
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+    transition: all 1s ease-in-out;
+    opacity: 0;
+}
+
+/* 青蛙样式 - 新图片版 */
+.frog {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.3s ease;
+    /* 使用内联SVG实现更可爱的青蛙形象 */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="120" r="65" fill="%237ED321"/><path d="M60,90 C60,60 140,60 140,90 C160,90 170,110 170,130 C170,150 160,170 140,170 C130,180 110,180 100,170 C90,180 70,180 60,170 C40,170 30,150 30,130 C30,110 40,90 60,90 Z" fill="%23417505"/><circle cx="75" cy="95" r="18" fill="white"/><circle cx="125" cy="95" r="18" fill="white"/><circle cx="75" cy="95" r="10" fill="%23333"/><circle cx="125" cy="95" r="10" fill="%23333"/><circle cx="80" cy="90" r="5" fill="white"/><circle cx="130" cy="90" r="5" fill="white"/><path d="M85,135 Q100,145 115,135" stroke="%23333" stroke-width="4" fill="none"/><rect x="75" cy="110" width="50" height="30" rx="10" fill="%23333"/><rect x="80" cy="115" width="40" height="20" rx="5" fill="%234A90E2"/><path d="M85,115 L115,115" stroke="white" stroke-width="2"/><path d="M85,120 L115,120" stroke="white" stroke-width="2"/><path d="M85,125 L115,125" stroke="white" stroke-width="2"/><path d="M85,130 L105,130" stroke="white" stroke-width="2"/><path d="M65,180 Q75,175 85,180" stroke="%237ED321" stroke-width="8" fill="none"/><path d="M115,180 Q125,175 135,180" stroke="%237ED321" stroke-width="8" fill="none"/><path d="M40,140 Q30,130 30,110" stroke="%237ED321" stroke-width="10" fill="none"/><path d="M160,140 Q170,130 170,110" stroke="%237ED321" stroke-width="10" fill="none"/><path d="M90,175 L90,190" stroke="%23FF6B6B" stroke-width="4" fill="none"/><path d="M110,175 L110,190" stroke="%23FF6B6B" stroke-width="4" fill="none"/><path d="M85,80 L95,75" stroke="%23FFB300" stroke-width="3" fill="none"/><path d="M115,75 L105,80" stroke="%23FFB300" stroke-width="3" fill="none"/><path d="M100,70 Q105,60 110,70" stroke="%23FFB300" stroke-width="3" fill="none"/><path d="M100,70 Q95,60 90,70" stroke="%23FFB300" stroke-width="3" fill="none"/></svg>');
+}
+
+/* 青蛙跳跃动画 */
+@keyframes frogJump {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-30px) scale(1.05);
+    }
+}
+
+.frog-jump {
+    animation: frogJump 1s ease-in-out infinite;
+}
+
+/* 简化青蛙表情状态 */
+.frog-happy {
+    transform: translateX(-50%) scale(1.1);
+}
+
+.frog-sad {
+    transform: translateX(-50%) scale(0.95);
+}
+
+/* 篝火样式 */
+.campfire {
+    position: absolute;
+    bottom: 15%;
+    left: 30%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 80px;
+}
+
+.wood {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 10px;
+    background-color: #8B4513;
+}
+
+.wood::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 15px;
+    width: 10px;
+    height: 50px;
+    background-color: #8B4513;
+    transform: rotate(45deg);
+}
+
+.wood::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: 15px;
+    width: 10px;
+    height: 50px;
+    background-color: #8B4513;
+    transform: rotate(-45deg);
+}
+
+.fire {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 50px;
+    background: linear-gradient(to top, #FF4500, #FFA500, #FFFF00);
+    border-radius: 50% 50% 20% 20%;
+    animation: flicker 0.5s infinite alternate;
+}
+
+@keyframes flicker {
+    0% {
+        transform: translateX(-50%) scale(1);
+    }
+    100% {
+        transform: translateX(-50%) scale(1.1);
+    }
+}
+
+/* 好感度指示器 */
+.affection-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.affection-label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.affection-bar {
+    width: 150px;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.affection-fill {
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(to right, #FF6347, #FFD700, #32CD32);
+    transition: width 0.5s ease;
+}
+
+.affection-value {
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* 问题区域 */
+.question-container {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin: 0 20px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.question-text {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.options-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.option {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.option:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.option:active {
+    transform: scale(0.98);
+}
+
+.option.selected {
+    background-color: #2196F3;
+    box-shadow: 0 0 20px rgba(33, 150, 243, 0.6);
+    animation: pulse 0.5s ease-in-out;
+}
+
+.option:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 好感度变化动画 */
+.affection-change {
+    pointer-events: none;
+    animation: floatUp 1.5s ease-out forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -70%) scale(1.2);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -150%) scale(1);
+    }
+}
+
+/* 游戏结束画面 */
+.game-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.game-over-text {
+    font-size: 36px;
+    color: #FF6347;
+    margin-bottom: 20px;
+}
+
+.game-over-message {
+    font-size: 18px;
+    color: white;
+    margin-bottom: 30px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.restart-btn {
+    padding: 15px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.restart-btn:hover {
+    background-color: #45a049;
+}
+
+/* 选择计数器 */
+.choice-counter {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 游戏封面样式 */
+.game-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #87CEEB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+.cover-content {
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cover-content h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.cover-content p {
+    font-size: 24px;
+    margin-bottom: 40px;
+}
+
+.start-btn {
+    padding: 15px 40px;
+    font-size: 20px;
+    background-color: #7ED321;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(126, 211, 33, 0.4);
+}
+
+.start-btn:hover {
+    background-color: #417505;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(65, 117, 5, 0.5);
+}
+
+.start-btn:active {
+    transform: scale(0.95);
+}
+
+/* 封面隐藏状态 */
+.game-cover.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .options-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .frog {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .campfire {
+        width: 50px;
+        height: 70px;
+    }
+}
